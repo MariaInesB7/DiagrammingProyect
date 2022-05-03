@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('documentos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->date('fechaCreacion');
+            $table->date('fecha');
+            $table->date('hora');
             $table->string('estado');
             $table->string('link');
             $table->timestamps();

@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\DocumentoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,11 +15,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+    return redirect('auth.login');
 });
 
 Auth::routes();
 
+Route::resource('users',App\Http\Controllers\UserController::class);
+Route::resource('documentos',App\Http\Controllers\DocumentoController::class);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 

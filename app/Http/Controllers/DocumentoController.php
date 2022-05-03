@@ -15,6 +15,9 @@ class DocumentoController extends Controller
     public function index()
     {
         //
+        $documentos=Documento::All();
+        return view('documento.index',compact('documentos'));
+        
     }
 
     /**
@@ -24,7 +27,8 @@ class DocumentoController extends Controller
      */
     public function create()
     {
-        //
+     
+        return view('documentos.create');
     }
 
     /**
@@ -36,6 +40,13 @@ class DocumentoController extends Controller
     public function store(Request $request)
     {
         //
+        $documento=Documento::create([
+            'nombre'=>request('nombre'),
+            'fecha' => date('Y/m/d'),
+            'hora' => date('H:i'),
+            'estado' => request('estado'),
+            'link' => request('link'),
+        ]);
     }
 
     /**
@@ -47,6 +58,7 @@ class DocumentoController extends Controller
     public function show(Documento $documento)
     {
         //
+        return view('documento.show',compact ('documento'));
     }
 
     /**
@@ -81,5 +93,7 @@ class DocumentoController extends Controller
     public function destroy(Documento $documento)
     {
         //
+        $documento->delete();
+        return redirect()->route('documento.index');
     }
 }
