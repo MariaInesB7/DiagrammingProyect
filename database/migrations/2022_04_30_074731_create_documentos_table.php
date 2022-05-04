@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->date('fecha');
-            $table->date('hora');
+     
             $table->string('estado');
             $table->string('link');
             $table->timestamps();

@@ -1,33 +1,20 @@
 @extends('adminlte::page')
 
 
-
-
 @section('content')
+<script src="https://unpkg.com/gojs@2.2.7/release/go.js"></script>
 
-  <div id="allSampleContent" class="p-4 w-full">
-               
-               
-                   
- 
-       
-@endsection
-
-@section('css')
-
-{{-- <link type=‘text/css’ rel=‘stylesheet’ href="{{asset('/css/UDStyle.css') }}" />
-@stop --}}
-
-@section('js')
-<script src="https://unpkg.com/gojs@2.2.7/release/go.js" ></script>
-
-<script id="code">
+<div id="allSampleContent" class="p-4 w-full">
+<script src="https://unpkg.com/gojs@2.2.7/extensions/Figures.js"></script>
+<script src="https://unpkg.com/gojs@2.2.7/extensions/DrawCommandHandler.js"></script>
+  <script id="code">
   function init() {
 
     // Since 2.2 you can also author concise templates with method chaining instead of GraphObject.make
     // For details, see https://gojs.net/latest/intro/buildingObjects.html
     const $ = go.GraphObject.make;
 
+    
     myDiagram =
       $(go.Diagram, "myDiagramDiv",
         {
@@ -45,7 +32,7 @@
             if (!ok) e.diagram.currentTool.doCancel();
           },
           commandHandler: $(DrawCommandHandler),  // support offset copy-and-paste
-          "clickCreatingTool.archetypeNodeData": { text: "NEW NODE" },  // create a new node by double-clicking in background
+          "clickCreatingTool.archetypeNodeData": { text: "Texto" },  // create a new node by double-clicking in background
           "PartCreated": e => {
             var node = e.subject;  // the newly inserted Node -- now need to snap its location to the grid
             node.location = node.location.copy().snapToGridPoint(e.diagram.grid.gridOrigin, e.diagram.grid.gridCellSize);
@@ -81,7 +68,7 @@
       $(go.Node, "Auto",
         {
           locationSpot: go.Spot.Center, locationObjectName: "SHAPE",
-          desiredSize: new go.Size(120, 60), minSize: new go.Size(40, 40),
+          desiredSize: new go.Size(180, 90), minSize: new go.Size(40, 40),
           resizable: true, resizeCellSize: new go.Size(20, 20)
         },
         // these Bindings are TwoWay because the DraggingTool and ResizingTool modify the target properties
@@ -103,7 +90,7 @@
         // this Shape prevents mouse events from reaching the middle of the port
         $(go.Shape, { width: 100, height: 40, strokeWidth: 0, fill: "transparent" }),
         $(go.TextBlock,
-          { margin: 1, textAlign: "center", overflow: go.TextBlock.OverflowEllipsis, editable: true },
+          { margin: 0.2, textAlign: "start", overflow: go.TextBlock.OverflowEllipsis, editable: true },
           // this Binding is TwoWay due to the user editing the text with the TextEditingTool
           new go.Binding("text").makeTwoWay(),
           new go.Binding("stroke", "color"))
@@ -114,10 +101,10 @@
         $(go.Panel, "Vertical",
           { maxSize: new go.Size(200, NaN) },  // limit width but not height
           $(go.TextBlock,
-            { font: "bold 10pt sans-serif", textAlign: "center" },
+            { font: "bold 12pt sans-serif", textAlign: "start" },
             new go.Binding("text")),
           $(go.TextBlock,
-            { font: "10pt sans-serif", textAlign: "center" },
+            { font: "10pt sans-serif", textAlign: "start" },
             new go.Binding("text", "details"))
         )
       );
@@ -227,12 +214,12 @@
       return [
         $("ContextMenuButton",
           $(go.Panel, "Horizontal",
-            ColorButton("white", "fill"), ColorButton("beige", "fill"), ColorButton("aliceblue", "fill"), ColorButton("lightyellow", "fill")
+            ColorButton("transparent", "fill"), ColorButton("white", "fill"), ColorButton("aliceblue", "fill"), ColorButton("lightyellow", "fill")
           )
         ),
         $("ContextMenuButton",
           $(go.Panel, "Horizontal",
-            ColorButton("lightgray", "fill"), ColorButton("lightgreen", "fill"), ColorButton("lightblue", "fill"), ColorButton("pink", "fill")
+            ColorButton("lightgray", "fill"), ColorButton("beige", "fill"), ColorButton("lightblue", "fill"), ColorButton("pink", "fill")
           )
         )
       ];
@@ -284,7 +271,7 @@
       return [
         $("ContextMenuButton",
           $(go.Panel, "Horizontal",
-            ThicknessButton(1), ThicknessButton(2), ThicknessButton(3), ThicknessButton(4)
+            ThicknessButton(0), ThicknessButton(1), ThicknessButton(2), ThicknessButton(3)
           )
         ),
         $("ContextMenuButton",
@@ -294,6 +281,7 @@
         )
       ];
     }
+  
 
     // Node context menu
 
@@ -313,23 +301,253 @@
       $("ContextMenu",
         $("ContextMenuButton",
           $(go.Panel, "Horizontal",
-            FigureButton("Rectangle"), FigureButton("RoundedRectangle"), FigureButton("Ellipse"), FigureButton("Diamond")
+            FigureButton("Rectangle"), FigureButton("LogicNot"), FigureButton("Ellipse"), FigureButton("Diamond")
           )
         ),
         $("ContextMenuButton",
           $(go.Panel, "Horizontal",
-            FigureButton("Parallelogram2"), FigureButton("ManualOperation"), FigureButton("Procedure"), FigureButton("Cylinder1")
+            FigureButton("FramedRectangle"), FigureButton("DividedProcess"), FigureButton("Procedure"), FigureButton("Cylinder1")
           )
         ),
         $("ContextMenuButton",
           $(go.Panel, "Horizontal",
-            FigureButton("Terminator"), FigureButton("CreateRequest"), FigureButton("Document"), FigureButton("TriangleDown")
+            FigureButton("Terminator"), FigureButton("CreateRequest"), FigureButton("Package"), FigureButton("Cube2")
           )
         ),
+        $("ContextMenuButton",
+          $(go.Panel, "Horizontal",
+            FigureButton("BpmnTaskUser"), FigureButton("Component"), FigureButton("Class"), FigureButton("File")
+          )
+        ),
+        
+    
+
         LightFillButtons(),
         DarkColorButtons(),
-        StrokeOptionsButtons()
+        StrokeOptionsButtons(),
+       
       );
+
+//Otras figuras definidas
+//
+
+
+//Persona
+      go.Shape.defineFigureGenerator("BpmnTaskUser", function(shape, w, h) {
+  var geo = new go.Geometry();
+  var fig = new go.PathFigure(0, 0, false);
+  geo.add(fig);
+
+  var fig2 = new go.PathFigure(.335 * w, (1 - .555) * h, true);
+  geo.add(fig2);
+  // Shirt
+  fig2.add(new go.PathSegment(go.PathSegment.Line, .335 * w, (1 - .405) * h));
+  fig2.add(new go.PathSegment(go.PathSegment.Line, (1 - .335) * w, (1 - .405) * h));
+  fig2.add(new go.PathSegment(go.PathSegment.Line, (1 - .335) * w, (1 - .555) * h));
+  fig2.add(new go.PathSegment(go.PathSegment.Bezier, w, .68 * h, (1 - .12) * w, .46 * h,
+    (1 - .02) * w, .54 * h));
+  fig2.add(new go.PathSegment(go.PathSegment.Line, w, h));
+  fig2.add(new go.PathSegment(go.PathSegment.Line, 0, h));
+  fig2.add(new go.PathSegment(go.PathSegment.Line, 0, .68 * h));
+  fig2.add(new go.PathSegment(go.PathSegment.Bezier, .335 * w, (1 - .555) * h, .02 * w, .54 * h,
+    .12 * w, .46 * h));
+  // Start of neck
+  fig2.add(new go.PathSegment(go.PathSegment.Line, .365 * w, (1 - .595) * h));
+  var radiushead = .5 - .285;
+  var centerx = .5;
+  var centery = radiushead;
+  var alpha2 = Math.PI / 4;
+  var KAPPA = ((4 * (1 - Math.cos(alpha2))) / (3 * Math.sin(alpha2)));
+  var cpOffset = KAPPA * .5;
+  var radiusw = radiushead;
+  var radiush = radiushead;
+  var offsetw = KAPPA * radiusw;
+  var offseth = KAPPA * radiush;
+  // Circle (head)
+  fig2.add(new go.PathSegment(go.PathSegment.Bezier, (centerx - radiusw) * w, centery * h, (centerx - ((offsetw + radiusw) / 2)) * w, (centery + ((radiush + offseth) / 2)) * h,
+    (centerx - radiusw) * w, (centery + offseth) * h));
+  fig2.add(new go.PathSegment(go.PathSegment.Bezier, centerx * w, (centery - radiush) * h, (centerx - radiusw) * w, (centery - offseth) * h,
+    (centerx - offsetw) * w, (centery - radiush) * h));
+  fig2.add(new go.PathSegment(go.PathSegment.Bezier, (centerx + radiusw) * w, centery * h, (centerx + offsetw) * w, (centery - radiush) * h,
+    (centerx + radiusw) * w, (centery - offseth) * h));
+  fig2.add(new go.PathSegment(go.PathSegment.Bezier, (1 - .365) * w, (1 - .595) * h, (centerx + radiusw) * w, (centery + offseth) * h,
+    (centerx + ((offsetw + radiusw) / 2)) * w, (centery + ((radiush + offseth) / 2)) * h));
+  fig2.add(new go.PathSegment(go.PathSegment.Line, (1 - .365) * w, (1 - .595) * h));
+  // Neckline
+  fig2.add(new go.PathSegment(go.PathSegment.Line, (1 - .335) * w, (1 - .555) * h));
+  fig2.add(new go.PathSegment(go.PathSegment.Line, (1 - .335) * w, (1 - .405) * h));
+  fig2.add(new go.PathSegment(go.PathSegment.Line, .335 * w, (1 - .405) * h));
+  var fig3 = new go.PathFigure(.2 * w, h, false);
+  geo.add(fig3);
+  // Arm lines
+  fig3.add(new go.PathSegment(go.PathSegment.Line, .2 * w, .8 * h));
+  var fig4 = new go.PathFigure(.8 * w, h, false);
+  geo.add(fig4);
+  fig4.add(new go.PathSegment(go.PathSegment.Line, .8 * w, .8 * h));
+  return geo;
+});
+
+//Componente
+go.Shape.defineFigureGenerator("Component", function(shape, w, h) {
+  var geo = new go.Geometry();
+  var fig = new go.PathFigure(w, h, true);
+  geo.add(fig);
+
+  // Component Box
+  fig.add(new go.PathSegment(go.PathSegment.Line, w, 0));
+  fig.add(new go.PathSegment(go.PathSegment.Line, 0.15 * w, 0));
+  fig.add(new go.PathSegment(go.PathSegment.Line, 0.15 * w, h));
+  fig.add(new go.PathSegment(go.PathSegment.Line, w, h).close());
+  var fig2 = new go.PathFigure(0, 0.2 * h, true);
+  geo.add(fig2);
+  // Component top sub box
+  fig2.add(new go.PathSegment(go.PathSegment.Line, 0.45 * w, 0.2 * h));
+  fig2.add(new go.PathSegment(go.PathSegment.Line, 0.45 * w, 0.4 * h));
+  fig2.add(new go.PathSegment(go.PathSegment.Line, 0, 0.4 * h));
+  fig2.add(new go.PathSegment(go.PathSegment.Line, 0, 0.2 * h).close());
+  var fig3 = new go.PathFigure(0, 0.6 * h, true);
+  geo.add(fig3);
+  // Component bottom sub box
+  fig3.add(new go.PathSegment(go.PathSegment.Line, 0.45 * w, 0.6 * h));
+  fig3.add(new go.PathSegment(go.PathSegment.Line, 0.45 * w, 0.8 * h));
+  fig3.add(new go.PathSegment(go.PathSegment.Line, 0, 0.8 * h));
+  fig3.add(new go.PathSegment(go.PathSegment.Line, 0, 0.6 * h).close());
+  return geo;
+});
+
+
+
+//Clase
+go.Shape.defineFigureGenerator("Class", function(shape, w, h) {
+  var geo = new go.Geometry();
+  var fig = new go.PathFigure(0, 0, true);
+  geo.add(fig);
+
+  // Class box
+  fig.add(new go.PathSegment(go.PathSegment.Line, w, 0));
+  fig.add(new go.PathSegment(go.PathSegment.Line, w, h));
+  fig.add(new go.PathSegment(go.PathSegment.Line, 0, h));
+  fig.add(new go.PathSegment(go.PathSegment.Line, 0, 0).close());
+  var fig2 = new go.PathFigure(0, 0.2 * h, true);
+  geo.add(fig2);
+  // Top box separater
+  fig2.add(new go.PathSegment(go.PathSegment.Line, w, 0.2 * h).close());
+  var fig3 = new go.PathFigure(0, 0.65 * h, true);
+  geo.add(fig3);
+  // Middle box separater
+  fig3.add(new go.PathSegment(go.PathSegment.Line, w, 0.65 * h).close());
+  return geo;
+});
+
+
+
+//Comentario
+go.Shape.defineFigureGenerator("File", function(shape, w, h) {
+  var geo = new go.Geometry();
+  var fig = new go.PathFigure(0, 0, true); // starting point
+  geo.add(fig);
+  fig.add(new go.PathSegment(go.PathSegment.Line, .75 * w, 0));
+  fig.add(new go.PathSegment(go.PathSegment.Line, w, .25 * h));
+  fig.add(new go.PathSegment(go.PathSegment.Line, w, h));
+  fig.add(new go.PathSegment(go.PathSegment.Line, 0, h).close());
+  var fig2 = new go.PathFigure(.75 * w, 0, false);
+  geo.add(fig2);
+  // The Fold
+  fig2.add(new go.PathSegment(go.PathSegment.Line, .75 * w, .25 * h));
+  fig2.add(new go.PathSegment(go.PathSegment.Line, w, .25 * h));
+  geo.spot1 = new go.Spot(0, .25);
+  geo.spot2 = go.Spot.BottomRight;
+  return geo;
+});
+
+//Container web browser
+go.Shape.defineFigureGenerator("DividedProcess", function(shape, w, h) {
+  var geo = new go.Geometry();
+  var param1 = shape ? shape.parameter1 : NaN;
+  if (isNaN(param1) || param1 < .1) param1 = .1; // Minimum
+  var fig = new go.PathFigure(0, 0, true);
+  geo.add(fig);
+
+  fig.add(new go.PathSegment(go.PathSegment.Line, w, 0));
+  fig.add(new go.PathSegment(go.PathSegment.Line, w, h));
+  fig.add(new go.PathSegment(go.PathSegment.Line, 0, h).close());
+  var fig2 = new go.PathFigure(0, param1 * h, false);
+  geo.add(fig2);
+  fig2.add(new go.PathSegment(go.PathSegment.Line, w, param1 * h));
+  //??? geo.spot1 = new go.Spot(0, param1);
+  //??? geo.spot2 = go.Spot.BottomRight;
+  return geo;
+});
+//Caja
+go.Shape.setFigureParameter("FramedRectangle", 0, new FigureParameter("ThicknessX", 8));
+go.Shape.setFigureParameter("FramedRectangle", 1, new FigureParameter("ThicknessY", 8));
+go.Shape.defineFigureGenerator("FramedRectangle", function(shape, w, h) {
+  var param1 = shape ? shape.parameter1 : NaN;
+  var param2 = shape ? shape.parameter2 : NaN;
+  if (isNaN(param1)) param1 = 8; // default values PARAMETER 1 is for WIDTH
+  if (isNaN(param2)) param2 = 8; // default values PARAMETER 2 is for HEIGHT
+
+  var geo = new go.Geometry();
+  var fig = new go.PathFigure(0, 0, true);
+  geo.add(fig);
+  // outer rectangle, clockwise
+  fig.add(new go.PathSegment(go.PathSegment.Line, w, 0));
+  fig.add(new go.PathSegment(go.PathSegment.Line, w, h));
+  fig.add(new go.PathSegment(go.PathSegment.Line, 0, h).close());
+  if (param1 < w/2 && param2 < h/2) {
+    // inner rectangle, counter-clockwise
+    fig.add(new go.PathSegment(go.PathSegment.Move, param1, param2));  // subpath
+    fig.add(new go.PathSegment(go.PathSegment.Line, param1, h - param2));
+    fig.add(new go.PathSegment(go.PathSegment.Line, w - param1, h - param2));
+    fig.add(new go.PathSegment(go.PathSegment.Line, w - param1, param2).close());
+  }
+  geo.setSpots(0, 0, 1, 1, param1, param2, -param1, -param2);
+  return geo;
+});
+//cubo
+go.Shape.defineFigureGenerator("Cube2", function(shape, w, h) {
+  var geo = new go.Geometry();
+  var fig = new go.PathFigure(0, .1 * h, true);
+  geo.add(fig);
+
+  fig.add(new go.PathSegment(go.PathSegment.Line, 0, h));
+  fig.add(new go.PathSegment(go.PathSegment.Line, .9 * w, h));
+  fig.add(new go.PathSegment(go.PathSegment.Line, w, .9 * h));
+  fig.add(new go.PathSegment(go.PathSegment.Line, w, 0));
+  fig.add(new go.PathSegment(go.PathSegment.Line, .1 * w, 0).close());
+  var fig2 = new go.PathFigure(0, .1 * h, false);
+  geo.add(fig2);
+  fig2.add(new go.PathSegment(go.PathSegment.Line, .9 * w, .1 * h));
+  fig2.add(new go.PathSegment(go.PathSegment.Line, w, 0));
+
+  fig2.add(new go.PathSegment(go.PathSegment.Move, .9 * w, .1 * h));
+  fig2.add(new go.PathSegment(go.PathSegment.Line, .9 * w, h));
+  geo.spot1 = new go.Spot(0, .3);
+  geo.spot2 = new go.Spot(.7, 1);
+
+  return geo;
+});
+
+//paquete
+go.Shape.defineFigureGenerator("Package", function(shape, w, h) {
+  var geo = new go.Geometry();
+  var fig = new go.PathFigure(0, 0.15 * h, true);
+  geo.add(fig);
+
+  // Package bottom rectangle
+  fig.add(new go.PathSegment(go.PathSegment.Line, w, 0.15 * h));
+  fig.add(new go.PathSegment(go.PathSegment.Line, w, h));
+  fig.add(new go.PathSegment(go.PathSegment.Line, 0, h).close());
+  var fig2 = new go.PathFigure(0, 0.15 * h, true);
+  geo.add(fig2);
+  // Package top flap
+  fig2.add(new go.PathSegment(go.PathSegment.Line, 0, 0));
+  fig2.add(new go.PathSegment(go.PathSegment.Line, 0.6 * w, 0));
+  fig2.add(new go.PathSegment(go.PathSegment.Line, 0.65 * w, 0.15 * h).close());
+  geo.spot1 = new go.Spot(0, 0.1);
+  geo.spot2 = new go.Spot(1, 1);
+  return geo;
+});
 
 
     // Group template
@@ -517,6 +735,8 @@
         });
     }
 
+   
+
     myDiagram.linkTemplate.contextMenu =
       $("ContextMenu",
         DarkColorButtons(),
@@ -555,4 +775,13 @@
   window.addEventListener('DOMContentLoaded', init);
 </script>
 
-@stop
+<div id="sample">
+<div id="myDiagramDiv" style="border: 1px solid black; width: 100%; height: 600px; position: relative; -webkit-tap-highlight-color: rgba(255, 255, 255, 0); cursor: auto; font: 13px sans-serif;"><canvas tabindex="0" width="1054" height="598" style="position: absolute; top: 0px; left: 0px; z-index: 2; user-select: none; touch-action: none; width: 1054px; height: 598px; cursor: auto;">This text is displayed if your browser does not support the Canvas HTML element.</canvas><div style="position: absolute; overflow: auto; width: 1054px; height: 598px; z-index: 1;"><div style="position: absolute; width: 1px; height: 1px;"></div></div></div>
+
+<div id="buttons">
+  <button id="loadModel" onclick="load()">Load</button>
+  <button id="saveModel" onclick="save()">Save</button>
+</div>
+
+
+@endsection

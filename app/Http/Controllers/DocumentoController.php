@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Documento;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DocumentoController extends Controller
@@ -15,8 +16,10 @@ class DocumentoController extends Controller
     public function index()
     {
         //
-        $documentos=Documento::All();
-        return view('documento.index',compact('documentos'));
+        $users = User::find();
+        $documentos= Documento::find();
+        $documentos=documento::paginate(3);
+        return view('documento.index',compact('users','documentos'));
         
     }
 
@@ -28,7 +31,7 @@ class DocumentoController extends Controller
     public function create()
     {
      
-        return view('documentos.create');
+        return view('documento.create');
     }
 
     /**
@@ -40,13 +43,15 @@ class DocumentoController extends Controller
     public function store(Request $request)
     {
         //
+        date_default_timezone_set("America/La_Paz");
         $documento=Documento::create([
             'nombre'=>request('nombre'),
             'fecha' => date('Y/m/d'),
-            'hora' => date('H:i'),
+           
             'estado' => request('estado'),
             'link' => request('link'),
         ]);
+        return redirect()->route('documentos.create');
     }
 
     /**
@@ -94,6 +99,6 @@ class DocumentoController extends Controller
     {
         //
         $documento->delete();
-        return redirect()->route('documento.index');
+        return redirect()->route('documentos.index');
     }
 }

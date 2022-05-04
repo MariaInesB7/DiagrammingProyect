@@ -249,7 +249,7 @@ return [
         ],
         [
             'text' => 'Grupo de trabajo',
-            'url'  => 'admin/settings',
+            'url'  => 'participas',
             'icon' => 'fas fa-fw fa-user',
         ],
         [

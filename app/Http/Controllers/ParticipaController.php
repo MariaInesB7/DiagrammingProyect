@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Participa;
+use App\Models\User;
+use App\Models\Documento;
 use Illuminate\Http\Request;
 
 class ParticipaController extends Controller
@@ -15,6 +17,13 @@ class ParticipaController extends Controller
     public function index()
     {
         //
+        
+            $participas = Participa::where('usuarioID',auth()->user()->id);
+            
+            return view('participa.index',compact('participas',$participas));
+        
+
+        
     }
 
     /**

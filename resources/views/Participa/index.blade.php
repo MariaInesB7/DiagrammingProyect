@@ -27,28 +27,30 @@
               </div>
               
               <div class="table-responsive">
-                  @if ($documentos)
+           
                       <div class="card-group">
-                          @foreach ($documentos as $documento)
+                          @foreach ($participas as $participa)
                           <div class="card ">
                             
                               <div class="card-body">
                               <i class="fas fa-pen-square fa-10x" style="color: rgb(86, 67, 131)" ></i>
-                              <h5 class="card-title">Nombre: {{$documento->nombre}}</h5>
+                              <h5 class="card-title">Nombre: {{DB::table('documentos')->where('id',$participa->documentoId)->value('nombre')}}</h5>
                             
-                            {{--   <p class="card-text"> Cliente: {{DB::table('clientes')->where('id',$documento->idCliente)->value('nombre')}}</p> --}}
-                              @foreach($participa->documentos as $documento)
-                            <p class="card-text">Fecha: {{$documento->fecha}}</p>
-                              {{-- <p class="card-text">Hora de inicio: {{$documento->hora}}</p> --}}
-                              <p class="card-text">Estado: {{$documento->estado}}</p>
-                              <p class="card-text">Link: {{$documento->link}}</p>
+                            {{--   <p class="card-text"> Cliente: {{DB::table('clientes')->where('id',$participa->idCliente)->value('nombre')}}</p> --}}
+                              @foreach($users->documentos as $documento)
+                             
+                            <p class="card-text">Fecha: {{$documentos->fecha}}</p>
+                              <p class="card-text">Hora de inicio: {{$documentos->hora}}</p>
+                              <p class="card-text">Estado: {{$documentos->estado}}</p>
+                              <p class="card-text">Link: {{$documentos->link}}</p>
                               @endforeach
                               @csrf
-                              <form  action="{{route('documentos.destroy',$documento)}}" method="post">
+
+                             {{--  <form  action="{{route('participas.destroy',$participa)}}" method="post">
                                   @csrf
-                              @method('delete')
+                              @method('delete') --}}
                                
-                               {{--  <a class="btn btn-info btn-sm" href="{{route('documentos.edit',$documento)}}">Ver o Editar</a>  --}}
+                               {{--  <a class="btn btn-info btn-sm" href="{{route('participas.edit',$participa)}}">Ver o Editar</a>  --}}
                                 <button class="btn btn-danger btn-sm" onclick="return confirm('¿ESTA SEGURO DE  BORRAR?')" 
                                 value="Borrar">Eliminar</button>
                             </form>
@@ -58,13 +60,11 @@
                       </div>
                       <div align="center" class="d-flex justify-content-center">
                           
-                              {!! $documentos->links("pagination::bootstrap-4") !!}
+                        {{--       {!! $participas->links("pagination::bootstrap-4") !!} --}}
                           
                       </div>
 
-                  @else
-                  
-                  @endif
+                 
                      
                     
               </div>
@@ -85,10 +85,10 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Crear documento</h4>
+        <h4 class="modal-title">Nuevo Diagrama</h4>
       </div>
       <div class="modal-body">
-        <form  action="{{route('documentos.store')}}" method="POST" enctype="multipart/form-data">
+        <form  action="{{route('participas.store')}}" method="POST" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="form-group">
               
