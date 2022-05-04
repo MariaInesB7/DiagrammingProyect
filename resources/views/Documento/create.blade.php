@@ -776,6 +776,7 @@ go.Shape.defineFigureGenerator("Package", function(shape, w, h) {
   
 </script>
 
+ 
 <div id="sample">
   <div id="myDiagramDiv" style="border: 1px solid black; width: 100%; height: 600px; position: relative; -webkit-tap-highlight-color: rgba(255, 255, 255, 0); cursor: auto; font: 13px sans-serif;"><canvas tabindex="0" width="1054" height="598" style="position: absolute; top: 0px; left: 0px; z-index: 2; user-select: none; touch-action: none; width: 1054px; height: 598px; cursor: auto;">This text is displayed if your browser does not support the Canvas HTML element.</canvas><div style="position: absolute; overflow: auto; width: 1054px; height: 598px; z-index: 1;"><div style="position: absolute; width: 1px; height: 1px;"></div></div></div>
   
@@ -783,7 +784,12 @@ go.Shape.defineFigureGenerator("Package", function(shape, w, h) {
     <button id="loadModel" onclick="load()">Load</button>
     <button id="saveModel" onclick="save()">Save</button>
   </div>
-  <textarea id="mySavedModel" style="width:100%;height:300px">{ "class": "GraphLinksModel",
+  <form method="post" action="{{route('documentos.update',$documento)}}" novalidate >
+    @csrf
+    @method('PATCH')
+    <label> Archivo</label>
+  <textarea id="mySavedModel" style="width:100%;height:300px" name="archivo">{
+     "class": "GraphLinksModel",
   "nodeDataArray": [
 {"key":1, "loc":"0 0", "text":"Alpha"},
 {"key":2, "loc":"170 0", "text":"Beta", "color":"blue", "thickness":2, "figure":"Procedure"},
@@ -796,5 +802,8 @@ go.Shape.defineFigureGenerator("Package", function(shape, w, h) {
 
  ]}
   </textarea>
+  <input type="submit" name="submit" value="Guardar" class="btn btn-success">
+
+  </form>
 </div>
 @endsection

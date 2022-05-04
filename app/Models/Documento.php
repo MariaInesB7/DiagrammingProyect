@@ -12,7 +12,7 @@ class Documento extends Model
     protected $fillable = [
         'nombre',
         'fecha',
-   
+        'archivo',
         'usuarioId',
 
     ];

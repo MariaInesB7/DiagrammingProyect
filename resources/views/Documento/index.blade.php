@@ -45,11 +45,12 @@
                               <form  action="{{route('documentos.destroy',$documento)}}" method="post">
                                   @csrf
                               @method('delete')
-                               
-                              <a class="btn btn-info btn-sm" href="{{route('documentos.edit',$documento)}}">Abrir</a>  
+                            
                                 <button class="btn btn-danger btn-sm" onclick="return confirm('¿ESTA SEGURO DE  BORRAR?')" 
                                 value="Borrar">Eliminar</button>
                             </form>
+                               
+                            <a class="btn btn-info btn-sm" href="{{route('documentos.edit',$documento)}}">Abrir</a>  
                               </div>
                           </div>
                           @endforeach

@@ -17,8 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->date('fecha');
-            $table->string('link')->nullable();
+            $table->json('archivo')->nullable();
             $table->unsignedBigInteger('usuarioId');
+
             $table->foreign('usuarioId')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

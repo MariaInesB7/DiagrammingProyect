@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\DB;
 use App\Models\Documento;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -31,7 +31,7 @@ class DocumentoController extends Controller
      */
     public function create()
     {
-     
+       
         return view('documento.create');
     }
 
@@ -50,9 +50,11 @@ class DocumentoController extends Controller
             'fecha' => date('Y/m/d'),
            
             'estado' => request('estado'),
-            'link' => request('link'),
+            'archivo' => request('archivo'),
+            
             'usuarioId'=>auth()->user()->id,
         ]);
+        $documento->save();
         return redirect()->route('documentos.create');
     }
 
@@ -77,7 +79,7 @@ class DocumentoController extends Controller
     public function edit(Documento $documento)
     {
         //
-        return view('documento.create');
+        return view('documento.create',compact('documento'));
     }
 
     /**
@@ -89,7 +91,11 @@ class DocumentoController extends Controller
      */
     public function update(Request $request, Documento $documento)
     {
-        //
+        
+        $documento->archivo=$request->archivo;
+        $documento->save();
+
+        return redirect()->back();
     }
 
     /**
