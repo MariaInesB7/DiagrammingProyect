@@ -5,11 +5,13 @@
 
 @section('content')
 <div id="todo" >
- <div id="myDiagramDiv" style="width: 300 px; height:300px; border :1px solid black" >
+ <div style="width: 100 px; height:100px" >
                
-               <h1>Gracias por elegir diagramming</h1>
-                   
+  <h3 class="mb-0"><b>Gracias por elegir diagramming</b></h3>
+ 
+  <i class="fa-solid fa-cat-space"></i>
  </div>
+
 </div>         
 @endsection
 

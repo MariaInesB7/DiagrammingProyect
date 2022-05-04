@@ -2,9 +2,10 @@
 
 
 @section('content')
-<script src="https://unpkg.com/gojs@2.2.7/release/go.js"></script>
+
 
 <div id="allSampleContent" class="p-4 w-full">
+  <script src="https://unpkg.com/gojs@2.2.7/release/go.js"></script>
 <script src="https://unpkg.com/gojs@2.2.7/extensions/Figures.js"></script>
 <script src="https://apis.google.com/js/api.js"></script>
 <script src="https://unpkg.com/gojs@2.2.7/extensions/DrawCommandHandler.js"></script>
@@ -758,13 +759,13 @@ go.Shape.defineFigureGenerator("Package", function(shape, w, h) {
     load();
   }
 
-  function save() {
+  /* function save2() {
     new GoGoogleDrive(managedDiagrams:mySavedModel, clientId: string, 
     pickerApiKey: string, defaultModel: document.getElementById("mySavedModel").value = myDiagram.model.toJson(), iconsRelativeDirectory: "../goCloudStorageIcons/"): GoGoogleDrive
-  }
+  } */
 
   // Show the diagram's model in JSON format
-  function save2() {
+  function save() {
     document.getElementById("mySavedModel").value = myDiagram.model.toJson();
     myDiagram.isModified = false;
   }
@@ -772,15 +773,28 @@ go.Shape.defineFigureGenerator("Package", function(shape, w, h) {
     myDiagram.model = go.Model.fromJson(document.getElementById("mySavedModel").value);
   }
   window.addEventListener('DOMContentLoaded', init);
+  
 </script>
 
 <div id="sample">
-<div id="myDiagramDiv" style="border: 1px solid black; width: 100%; height: 600px; position: relative; -webkit-tap-highlight-color: rgba(255, 255, 255, 0); cursor: auto; font: 13px sans-serif;"><canvas tabindex="0" width="1054" height="598" style="position: absolute; top: 0px; left: 0px; z-index: 2; user-select: none; touch-action: none; width: 1054px; height: 598px; cursor: auto;">This text is displayed if your browser does not support the Canvas HTML element.</canvas><div style="position: absolute; overflow: auto; width: 1054px; height: 598px; z-index: 1;"><div style="position: absolute; width: 1px; height: 1px;"></div></div></div>
+  <div id="myDiagramDiv" style="border: 1px solid black; width: 100%; height: 600px; position: relative; -webkit-tap-highlight-color: rgba(255, 255, 255, 0); cursor: auto; font: 13px sans-serif;"><canvas tabindex="0" width="1054" height="598" style="position: absolute; top: 0px; left: 0px; z-index: 2; user-select: none; touch-action: none; width: 1054px; height: 598px; cursor: auto;">This text is displayed if your browser does not support the Canvas HTML element.</canvas><div style="position: absolute; overflow: auto; width: 1054px; height: 598px; z-index: 1;"><div style="position: absolute; width: 1px; height: 1px;"></div></div></div>
+  
+  <div id="buttons">
+    <button id="loadModel" onclick="load()">Load</button>
+    <button id="saveModel" onclick="save()">Save</button>
+  </div>
+  <textarea id="mySavedModel" style="width:100%;height:300px">{ "class": "GraphLinksModel",
+  "nodeDataArray": [
+{"key":1, "loc":"0 0", "text":"Alpha"},
+{"key":2, "loc":"170 0", "text":"Beta", "color":"blue", "thickness":2, "figure":"Procedure"},
+{"key":3, "loc":"0 100", "text":"Gamma", "color":"green", "figure":"Cylinder1"}
 
-<div id="buttons">
-  <button id="loadModel" onclick="load()">Load</button>
-  <button id="saveModel" onclick="save()">Save</button>
+ ],
+  "linkDataArray": [
+{"from":1, "to":2, "dash":[ 6,3 ], "thickness":4},
+{"from":1, "to":3, "dash":[ 2,4 ], "color":"green", "text":"label"}
+
+ ]}
+  </textarea>
 </div>
-
-
 @endsection
