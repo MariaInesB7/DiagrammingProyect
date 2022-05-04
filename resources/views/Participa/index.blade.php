@@ -27,23 +27,24 @@
               </div>
               
               <div class="table-responsive">
-           
+                @if ($participas)
                       <div class="card-group">
                           @foreach ($participas as $participa)
                           <div class="card ">
                             
                               <div class="card-body">
                               <i class="fas fa-pen-square fa-10x" style="color: rgb(86, 67, 131)" ></i>
-                              <h5 class="card-title">Nombre: {{DB::table('documentos')->where('id',$participa->documentoId)->value('nombre')}}</h5>
+                              {{-- <h5 class="card-title">Nombre: {{DB::table('documentos')->where('id',$participa->documentoId)->value('nombre')}}</h5> --}}
                             
                             {{--   <p class="card-text"> Cliente: {{DB::table('clientes')->where('id',$participa->idCliente)->value('nombre')}}</p> --}}
-                              @foreach($users->documentos as $documento)
-                             
-                            <p class="card-text">Fecha: {{$documentos->fecha}}</p>
-                              <p class="card-text">Hora de inicio: {{$documentos->hora}}</p>
+                           
+                            <h5 class="card-title">ID: {{$participa->documentoId}} </h5>
+                            <p class="card-text">Estado: {{$participa->usuarioId}}</p>
+                         {{--    <p class="card-text">Fecha: {{DB::table('documentos')->where('id',$participa->documentoId)->value('fecha')}}</p>
+                              <p class="card-text">Hora de inicio: {{DB::table('documentos')->where('id',$participa->documentoId)->value('estado')}}</p>
                               <p class="card-text">Estado: {{$documentos->estado}}</p>
-                              <p class="card-text">Link: {{$documentos->link}}</p>
-                              @endforeach
+                              <p class="card-text">Link: {{$documentos->link}}</p> --}}
+                          
                               @csrf
 
                              {{--  <form  action="{{route('participas.destroy',$participa)}}" method="post">
@@ -65,7 +66,9 @@
                       </div>
 
                  
-                     
+                      @else
+                  
+                      @endif
                     
               </div>
               <div class="card-footer py-4">

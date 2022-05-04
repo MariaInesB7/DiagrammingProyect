@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Diagramming')
 
 @section('content_header')
     <h1>Diagramas</h1>
@@ -34,21 +34,19 @@
                             
                               <div class="card-body">
                               <i class="fas fa-pen-square fa-10x" style="color: rgb(86, 67, 131)" ></i>
-                              <h5 class="card-title">Nombre: {{$documento->nombre}}</h5>
+                              <h5 class="card-title">Nombre: {{$documento->nombre}} </h5>
                             
-                            {{--   <p class="card-text"> Cliente: {{DB::table('clientes')->where('id',$documento->idCliente)->value('nombre')}}</p> --}}
-                              @foreach($participa->documentos as $documento)
-                            <p class="card-text">Fecha: {{$documento->fecha}}</p>
-                              {{-- <p class="card-text">Hora de inicio: {{$documento->hora}}</p> --}}
-                              <p class="card-text">Estado: {{$documento->estado}}</p>
+                           
+                              <p class="card-text">Fecha: {{$documento->fecha}}</p>
+                       
                               <p class="card-text">Link: {{$documento->link}}</p>
-                              @endforeach
                               @csrf
+
                               <form  action="{{route('documentos.destroy',$documento)}}" method="post">
                                   @csrf
                               @method('delete')
                                
-                               {{--  <a class="btn btn-info btn-sm" href="{{route('documentos.edit',$documento)}}">Ver o Editar</a>  --}}
+                              <a class="btn btn-info btn-sm" href="{{route('documentos.edit',$documento)}}">Abrir</a>  
                                 <button class="btn btn-danger btn-sm" onclick="return confirm('¿ESTA SEGURO DE  BORRAR?')" 
                                 value="Borrar">Eliminar</button>
                             </form>
@@ -58,7 +56,8 @@
                       </div>
                       <div align="center" class="d-flex justify-content-center">
                           
-                              {!! $documentos->links("pagination::bootstrap-4") !!}
+                        {!! $documentos->links("pagination::bootstrap-4") !!}
+                            
                           
                       </div>
 
@@ -98,39 +97,6 @@
               <input type="text" class="form-control" name="nombre">
             </div>
            
-
-            
-               
-                <div class="form-group">
-                  <label> Estado: </label>
-                  <input type="text" class="form-control" name="estado">
-                </div>
-                <div class="form-group">
-                  <label> Link: </label>
-                  <input type="text" class="form-control" name="link">
-                </div>
-              
-                {{-- <div class="form-group">
-              <h5>Cliente:</h5>
-          <select name = "idCliente" id="idCliente" class="form-control">
-              <option value="">Seleccione el cliente</option>
-                  @foreach ($clientes as $cliente)
-                      <option value="{{$cliente->id}}">
-                          {{$cliente->nombre}}
-                      </option>
-                  @endforeach
-          </select>
-                </div> --}}
-
-       {{--    <h5>Empleado:</h5>
-          <select name = "idUser" id="idUser" class="form-control" onchange="habilitar()" >
-              <option value="">Seleccione el empleado</option>
-                  @foreach ($users as $user)
-                      <option value="{{$user->id}}">
-                          {{$user->name}}
-                      </option>
-                  @endforeach
-          </select> --}}
 
                 <input type="submit" name="submit" value="Guardar" class="btn btn-success">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

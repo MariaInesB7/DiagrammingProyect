@@ -12,14 +12,14 @@ class Documento extends Model
     protected $fillable = [
         'nombre',
         'fecha',
-        'hora',
-        'estado',
-        'link',
+   
+        'usuarioId',
+
     ];
 
     //Relacion *...*
     public function users(){
-        return $this->belongsToMany('App\Models\User');
+        return $this->belongsTo(User::class,'id');
     }
 }
 

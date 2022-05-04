@@ -43,6 +43,6 @@ class User extends Authenticatable
     ];
     //Relacion *...*
     public function documentos(){
-        return $this->belongsToMany('App\Models\Documento');
+        return $this->hasMany(Documento::class,'id');
     }
 }

@@ -17,10 +17,8 @@ class ParticipaController extends Controller
     public function index()
     {
         //
-        
-            $participas = Participa::where('usuarioID',auth()->user()->id);
-            
-            return view('participa.index',compact('participas',$participas));
+        $users = User::find('usuarioId',auth()->user()->id);  
+        return view('documento.index',compact('users'));
         
 
         

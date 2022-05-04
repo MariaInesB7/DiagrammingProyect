@@ -16,10 +16,11 @@ class DocumentoController extends Controller
     public function index()
     {
         //
-        $users = User::find();
-        $documentos= Documento::find();
-        $documentos=documento::paginate(3);
-        return view('documento.index',compact('users','documentos'));
+        //$users = User::where('usuarioId',auth()->user()->id)->first();   
+      
+        $documentos=Documento::where('usuarioId',auth()->user()->id)->paginate(4);
+
+        return view('documento.index',compact('documentos',$documentos));
         
     }
 
@@ -50,6 +51,7 @@ class DocumentoController extends Controller
            
             'estado' => request('estado'),
             'link' => request('link'),
+            'usuarioId'=>auth()->user()->id,
         ]);
         return redirect()->route('documentos.create');
     }
@@ -63,7 +65,7 @@ class DocumentoController extends Controller
     public function show(Documento $documento)
     {
         //
-        return view('documento.show',compact ('documento'));
+        return view('documento.create');
     }
 
     /**
@@ -75,6 +77,7 @@ class DocumentoController extends Controller
     public function edit(Documento $documento)
     {
         //
+        return view('documento.create');
     }
 
     /**

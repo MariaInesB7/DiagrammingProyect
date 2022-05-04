@@ -14,8 +14,4 @@ class Participa extends Model
         'documentoId',
         
     ];
-    public function documentos(){
-        return $this->belongsToMany('App\Models\Documento');
-    }
-
 }

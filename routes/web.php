@@ -21,7 +21,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::resource('users',App\Http\Controllers\UserController::class);
-Route::resource('participas',App\Http\Controllers\ParticipaController::class);
+//Route::resource('participas',App\Http\Controllers\ParticipaController::class);
 Route::resource('documentos',App\Http\Controllers\DocumentoController::class);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

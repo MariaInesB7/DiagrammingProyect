@@ -39,22 +39,43 @@ class DatabaseSeeder extends Seeder
      
         $documento1->fecha='2021-01-01';
        // $documento1->hora=date('H:i');
-        $documento1->estado='En proceso';
+
         $documento1->link='Edvin Añez Llanos';
+        $documento1->usuarioId=1;
         $documento1->save();
 
         $documento2= new Documento();
         $documento2->nombre='diagrama c4';
         $documento2->fecha='2021-04-01';
       //  $documento2->hora=date('H:i');
-        $documento2->estado='En proceso';
+     
         $documento2->link='Edvin Añez Llanos';
+        $documento2->usuarioId=2;
         $documento2->save();
+
+        $documento3= new Documento();
+        $documento3->nombre='diagrama c4 Parcial';
+        $documento3->fecha='2021-05-01';
+         $documento2->hora=date('H:i');
+   
+        $documento3->link='Maria';
+        $documento3->usuarioId=1;
+        $documento3->save();
 
         $participa=new Participa();
         $participa->usuarioId=1;
-        $participa->documentoId=1;
+        $participa->documentoId=3;
         $participa->save();
+
+        $participa2=new Participa();
+        $participa2->usuarioId=2;
+        $participa2->documentoId=2;
+        $participa2->save();
+
+        $participa3=new Participa();
+        $participa3->usuarioId=1;
+        $participa3->documentoId=1;
+        $participa3->save();
 
         /* $participa=new Participa();
         $participa->usuarioId=1;

@@ -6,6 +6,7 @@
 
 <div id="allSampleContent" class="p-4 w-full">
 <script src="https://unpkg.com/gojs@2.2.7/extensions/Figures.js"></script>
+<script src="https://apis.google.com/js/api.js"></script>
 <script src="https://unpkg.com/gojs@2.2.7/extensions/DrawCommandHandler.js"></script>
   <script id="code">
   function init() {
@@ -180,14 +181,7 @@
         CMButton({ alignment: new go.Spot(0.75, 0) })
       );
 
-    // Common context menu button definitions
-
-    // All buttons in context menu work on both click and contextClick,
-    // in case the user context-clicks on the button.
-    // All buttons modify the node data, not the Node, so the Bindings need not be TwoWay.
-
-    // A button-defining helper function that returns a click event handler.
-    // PROPNAME is the name of the data property that should be set to the given VALUE.
+   
     function ClickFunction(propname, value) {
       return (e, obj) => {
           e.handled = true;  // don't let the click bubble up
@@ -764,8 +758,13 @@ go.Shape.defineFigureGenerator("Package", function(shape, w, h) {
     load();
   }
 
-  // Show the diagram's model in JSON format
   function save() {
+    new GoGoogleDrive(managedDiagrams:mySavedModel, clientId: string, 
+    pickerApiKey: string, defaultModel: document.getElementById("mySavedModel").value = myDiagram.model.toJson(), iconsRelativeDirectory: "../goCloudStorageIcons/"): GoGoogleDrive
+  }
+
+  // Show the diagram's model in JSON format
+  function save2() {
     document.getElementById("mySavedModel").value = myDiagram.model.toJson();
     myDiagram.isModified = false;
   }
